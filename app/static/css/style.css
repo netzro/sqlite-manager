@@ -1,0 +1,13 @@
+body {
+    font-size: 14px;
+}
+.table-responsive {
+    overflow-x: auto;
+}
+.btn {
+    min-width: 44px;
+    padding: 8px;
+}
+textarea.form-control {
+    resize: vertical;
+}

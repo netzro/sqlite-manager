@@ -1,0 +1,28 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+    <h1>{{ table_name }}</h1>
+    {% if rows %}
+        <div style="overflow-x: auto;">
+            <table border="1">
+                <thead>
+                    <tr>
+                        {% for column in columns %}
+                            <th>{{ column }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in rows %}
+                        <tr>
+                            {% for value in row.values() %}
+                                <td>{{ value }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>No data found in {{ table_name }}.</p>
+    {% endif %}
+{% endblock %}

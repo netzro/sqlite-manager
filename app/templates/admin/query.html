@@ -1,0 +1,50 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+    <h1>SQL Query</h1>
+    <form method="POST">
+        <div>
+            <label for="db_name">Database</label>
+            <select name="db_name" id="db_name">
+                {% for db in databases %}
+                    <option value="{{ db }}">{{ db.capitalize() }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="query">Query</label>
+            <textarea name="query" id="query" rows="5">{{ query }}</textarea>
+        </div>
+        <input type="submit" value="Run Query">
+        {% if result %}
+            <input type="submit" name="export" value="Export to CSV">
+        {% endif %}
+    </form>
+    
+    {% if error %}
+        <div style="color: red; margin-top: 10px;">{{ error }}</div>
+    {% endif %}
+    
+    {% if result %}
+        <h2 style="margin-top: 20px;">Results</h2>
+        <div style="overflow-x: auto;">
+            <table border="1">
+                <thead>
+                    <tr>
+                        {% for column in result[0].keys() %}
+                            <th>{{ column }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in result %}
+                        <tr>
+                            {% for value in row.values() %}
+                                <td>{{ value }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}
