@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Check - SQLite Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container py-4">
+        <h1 class="mb-4 text-center">Database Check</h1>
+        <a href="/" class="btn btn-secondary mb-3">Back to Home</a>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Available Databases and Tables</h5>
+            </div>
+            <div class="card-body">
+                <h6>States Database (states.db)</h6>
+                {% if states_tables %}
+                    <ul class="list-group mb-3">
+                        {% for table in states_tables %}
+                            <li class="list-group-item">{{ table }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">No tables found in states.db.</p>
+                {% endif %}
+
+                <h6>Past Results Database (past_results.db)</h6>
+                {% if past_tables %}
+                    <ul class="list-group">
+                        {% for table in past_tables %}
+                            <li class="list-group-item">{{ table }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">No tables found in past_results.db.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

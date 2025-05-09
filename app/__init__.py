@@ -43,7 +43,7 @@ def create_app():
             if model_key in models:
                 admin.add_view(CustomModelView(
                     models[model_key],
-                    past_session,  # Use separate session
+                    past_session,
                     name=f"{table}",
                     category="Past Results",
                     endpoint=f"past_{table.lower()}"
@@ -59,15 +59,17 @@ def create_app():
     @app.route('/check-db')
     def check_db():
         with app.app_context():
-            output = []
             try:
                 states_tables = inspect(db.engine).get_table_names()
-                output.append(f"States.db tables: {states_tables}")
                 past_engine = db.get_engine(bind='past_results')
                 past_tables = inspect(past_engine).get_table_names()
-                output.append(f"PastResults.db tables: {past_tables}")
-                return '<br>'.join(output)
+                return render_template('db_check.html', 
+                                     states_tables=states_tables, 
+                                     past_tables=past_tables)
             except Exception as e:
-                return f"Database check failed: {str(e)}"
+                return render_template('db_check.html', 
+                                     states_tables=[], 
+                                     past_tables=[], 
+                                     error=str(e))
     
     return app
